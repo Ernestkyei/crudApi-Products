@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ernestkyei/cse-341-project.git"
+    "url": "https://github.com/Ernestkyei/crudApi-Products.git"
   },
   "author": "Ernest",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Ernestkyei/cse-341-project/issues"
+    "url": "https://github.com/Ernestkyei/crudApi-Products.git"
   },
-  "homepage": "https://github.com/Ernestkyei/cse-341-project#readme",
+  "homepage": "https://github.com/Ernestkyei/crudApi-Products.git",
   "dependencies": {
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
