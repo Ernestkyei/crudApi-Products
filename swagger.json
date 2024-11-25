@@ -1,0 +1,165 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Products API",
+    "description": "API to manage product information",
+    "version": "1.0.0"
+  },
+  "host": "project1-pzct.onrender.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api-docs": {
+      "get": {
+        "description": "Fetch the Swagger API documentation",
+        "responses": {
+          "default": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "description": "Fetch all products",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new product",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "category": { "type": "string" },
+                "price": { "type": "number", "format": "float" },
+                "description": { "type": "string" },
+                "stock": { "type": "integer" },
+                "sku": { "type": "string" }
+              },
+              "example": {
+                "name": "Product 1",
+                "category": "Electronics",
+                "price": 199.99,
+                "description": "A high-quality electronic product.",
+                "stock": 100,
+                "sku": "P12345"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product created successfully"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "description": "Fetch a product by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product found"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Product not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "Update product information",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "category": { "type": "string" },
+                "price": { "type": "number", "format": "float" },
+                "description": { "type": "string" },
+                "stock": { "type": "integer" },
+                "sku": { "type": "string" }
+              },
+              "example": {
+                "name": "Updated Product",
+                "category": "Home Appliances",
+                "price": 99.99,
+                "description": "Updated description for the product.",
+                "stock": 50,
+                "sku": "P11111"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a product by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}

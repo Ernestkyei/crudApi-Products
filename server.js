@@ -3,7 +3,7 @@ const bodyParser = require('body-parser'); // Correct
 const mongodb = require('./data/database');
 const app = express();
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8080;
 
 // CORS headers configuration
 app.use((req, res, next) => {
@@ -19,8 +19,7 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
-
-app.use('/', require('./routes'));  // This assumes you have routes configured
+app.use('/', require('./routes'));
 
 mongodb.initDb((err) => {
     if (err) {

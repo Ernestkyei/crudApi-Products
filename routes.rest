@@ -1,44 +1,44 @@
 
 #GET ALL CONTACT
-GET http://localhost:3000/users
+GET http://localhost:8080/products
 
 
 
-### Get contact Id
-GET http://localhost:3000/users/6731fa875010e9b7363c1f0d
+### Get product Id
+GET http://localhost:8080/products
 
 
 
 
-POST http://localhost:3000/users HTTP/1.1
+POST http://localhost:8080/products HTTP/1.1
 Content-Type: application/json
 
 
 
-{
-  "email": "test5@example.com",
-  "username": "john@john.com",
-  "name": "Hello4",
-  "ipaddress": "94.121.163.63"
-}
+  {
+    "name": "Bluetooth Headphones",
+    "price": 79.99,
+    "category": "Audio",
+    "description": "Noise-cancelling Bluetooth headphones with over-ear design",
+    "stockQuantity": 50
+  }
 
 
 
 ### PUT contact
-PUT http://localhost:3000/users/
+PUT http://localhost:8080/products/
 Content-Type: application/json
 
 
-{
-  "email": "test5@example.com",
-  "username": "john@john.com",
-  "name": "Hello4",
-  "ipaddress": "94.121.163.63"
-} 
-
+  {
+    "name": "Wireless Mouse",
+    "price": 25.99,
+    "category": "Electronics",
+    "description": "Ergonomic wireless mouse with long battery life",
+    "stockQuantity": 100
+  }
 
 //Delete contact
-
-DELETE http://localhost:3000/users/6731f7d75010e9b7363c1f09
+DELETE http://localhost:8080/prodducts
 
  

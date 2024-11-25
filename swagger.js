@@ -1,14 +1,14 @@
 const swaggerAutogen = require('swagger-autogen')();
 
 const outputFile = './swagger-output.json';  
-const endpointsFiles = ['./routes/*.js'];  
+const endpointsFiles = ['./routes/*.js'];     
 
 const doc = {
   info: {
-    title: 'Users api',  
-    description: 'Users api',  
+    title: 'products api',  
+    description: 'API documentation for managing products',  
   },
-  host: 'localhost:3001',  
+  host: 'localhost: 8080',  
   basePath: '/',  
 };
 
