@@ -5,7 +5,8 @@ const productsController = {
     // Get all products
     getAll: async (req, res) => {
         try {
-            const result = await mongodb.getDatabase().db().collection('products').find();
+            const db = mongodb.getDatabase(); // Get the database directly
+            const result = await db.collection('products').find();
             const products = await result.toArray();
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(products);
@@ -22,7 +23,7 @@ const productsController = {
             if (!ObjectId.isValid(productId)) {
                 return res.status(400).json({ error: 'Invalid ID format' });
             }
-            const db = mongodb.getDatabase().db();
+            const db = mongodb.getDatabase(); // Get the database directly
             const product = await db.collection('products').findOne({ _id: new ObjectId(productId) });
             if (!product) {
                 return res.status(404).json({ error: 'Product not found' });
@@ -44,7 +45,8 @@ const productsController = {
                 description: req.body.description,
                 stockQuantity: req.body.stockQuantity,
             };
-            const response = await mongodb.getDatabase().db().collection('products').insertOne(product);
+            const db = mongodb.getDatabase(); // Get the database directly
+            const response = await db.collection('products').insertOne(product);
             if (response.acknowledged) {
                 res.status(201).json({ message: 'Product created successfully', id: response.insertedId });
             } else {
@@ -59,7 +61,11 @@ const productsController = {
     // Update a product by ID
     updateProduct: async (req, res) => {
         try {
-            const productId = new ObjectId(req.params.id);
+            const productId = req.params.id;
+            if (!ObjectId.isValid(productId)) {
+                return res.status(400).json({ error: 'Invalid ID format' });
+            }
+
             const updatedProduct = {
                 name: req.body.name,
                 price: req.body.price,
@@ -68,12 +74,16 @@ const productsController = {
                 stockQuantity: req.body.stockQuantity,
             };
 
-            const response = await mongodb.getDatabase().db().collection('products').replaceOne({ _id: productId }, updatedProduct);
+            const db = mongodb.getDatabase(); // Get the database directly
+            const response = await db.collection('products').updateOne(
+                { _id: new ObjectId(productId) },
+                { $set: updatedProduct }
+            );
 
-            if (response.matchedCount > 0) {
-                res.status(204).send(); // No content, update was successful
+            if (response.modifiedCount > 0) {
+                res.status(200).json({ message: 'Product updated successfully' });
             } else {
-                res.status(404).json({ message: 'Product not found' });
+                res.status(404).json({ message: 'Product not found or no changes made' });
             }
         } catch (err) {
             console.error('Error updating product:', err);
@@ -84,14 +94,23 @@ const productsController = {
     // Delete a product by ID
     deleteProduct: async (req, res) => {
         try {
-            const productId = new ObjectId(req.params.id);
+            const productId = req.params.id; // Extract the ID from the URL
 
-            const response = await mongodb.getDatabase().db().collection('products').deleteOne({ _id: productId });
+            if (!productId) {
+                return res.status(400).json({ message: 'ID is required' });
+            }
+
+            if (!ObjectId.isValid(productId)) {
+                return res.status(400).json({ message: 'Invalid ID format' });
+            }
+
+            const db = mongodb.getDatabase();
+            const response = await db.collection('products').deleteOne({ _id: new ObjectId(productId) });
 
             if (response.deletedCount > 0) {
-                res.status(204).send(); // No content, deletion was successful
+                return res.status(204).send(); // Successful deletion
             } else {
-                res.status(404).json({ message: 'Product not found' });
+                return res.status(404).json({ message: 'Product not found' });
             }
         } catch (err) {
             console.error('Error deleting product:', err);

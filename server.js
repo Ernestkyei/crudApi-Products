@@ -4,6 +4,7 @@ const mongodb = require('./data/database');
 const app = express();
 
 const port = process.env.PORT || 8080;
+app.use(express.json());  // For parsing application/json
 
 // CORS headers configuration
 app.use((req, res, next) => {
